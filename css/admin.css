@@ -1,0 +1,12 @@
+
+
+.so-panels-dialog-edit-widget {
+
+    z-index: 999999999999999999;
+    position: relative;
+}
+
+.so-panels-dialog-edit-widget .so-overlay {
+
+    z-index: 9999999;
+}
