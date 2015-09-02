@@ -6,7 +6,7 @@
 ## Output in theme
 
 ```
-    echo get_page_builder_field( 'page_builder_data' );
+    echo get_page_builder_field( 'page_builder_field_name' );
 ```
 
 
