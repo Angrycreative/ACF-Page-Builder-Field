@@ -6,17 +6,7 @@
 ## Output in theme
 
 ```
-	$uid = uniqid( true );
-	$len = strlen($uid);
-
-	$field_id = substr($uid, $len - 6, 6);
-
-	echo '<div id="acf_page_builder_field_id_'.$field_id.'" >';
-
-	$panels_data = get_sub_field('page_builder_data');
-	echo acf_siteorigin_panels_render( $field_id, $panels_data );
-
-	echo '</div>';
+    echo get_page_builder_field( 'page_builder_data' );
 ```
 
 
