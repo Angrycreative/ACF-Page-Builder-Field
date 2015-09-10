@@ -2,6 +2,13 @@
 
 	function initialize_field( $el ) {
 
+		var panels = window.siteoriginPanels;
+
+		if(typeof jQuery.fn.soPanelsSetupBuilderField2 != 'undefined') {
+
+			jQuery( ".siteorigin-page-builder-field").soPanelsSetupBuilderField2( panels );
+		}
+
 	}
 
 

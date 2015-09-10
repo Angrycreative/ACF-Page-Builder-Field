@@ -7,30 +7,16 @@ jQuery(function(){
 
     $ = jQuery;
 
+    var cur_panel;
+
     $.fn.soPanelsSetupBuilderField2 = function ( panels ) {
 
-        /*
-        console.log('panels');
-        console.log(panels);
-        console.log('inside22');
-        console.log(this);
-        */
+        //className: "siteorigin-page-builder-field siteorigin-panels-builder-field"
+
+        var fields = $('.siteorigin-page-builder-field');
+
         return this.each(function() {
             var $$ = $(this);
-
-            //alert('loop');
-            //console.log($(this));
-
-            /*
-             var widgetId = $$.closest('form').find('.widget-id').val();
-
-             console.log('widgetid');
-             console.log(widgetId);
-             // Exit if this isn't a real widget
-             if( typeof widgetId !== 'undefined' && widgetId.indexOf('__i__') > -1 ) {
-             return;
-             }
-             */
 
             // Create the main builder model
             var builderModel = new panels.model.builder();
@@ -42,6 +28,7 @@ jQuery(function(){
 
             // Save panels data when we close the dialog, if we're in a dialog
             var dialog = $$.closest('.so-panels-dialog-wrapper').data('view');
+
             if( typeof dialog !== 'undefined' ) {
                 dialog.on('close_dialog', function(){
                     builderModel.refreshPanelsData();
@@ -61,13 +48,6 @@ jQuery(function(){
                 builderView.setDialogParents(soPanelsOptions.loc.layout_widget, dialog);
             }
 
-            /*
-            console.log('obj');
-            console.log($$);
-            console.log($$.find('input.acf-panels-data'));
-            console.log($$.find('input.acf-panels-data').val());
-            */
-
             if( $$.find('input.acf-panels-data').val() == "null" )
             {
                 return ;
@@ -82,38 +62,31 @@ jQuery(function(){
                 } )
                 .setDataField( $$.find('input.acf-panels-data') );
 
-            /*
-            console.log('soPanelsOptions');
-            console.log(soPanelsOptions);
-            */
+            $$.data( 'view-id', builderView.cid );
 
             // Set up the dialog opening
             builderView.setDialogParents(soPanelsOptions.loc.layout_widget, builderView.dialog);
 
-            /*
-            console.log('register click');
-            console.log($$.find('.siteorigin-panels-display-builder-field'));
-            console.log($$.find('.siteorigin-panels-display-builder-field'));
-            */
             $builder_id = $$.data('builder-id');
-            /*
-            console.log($builder_id);
-            console.log('#siteorigin-page-builder-widget-' + $builder_id);
-            console.log($('#siteorigin-page-builder-widget-' + $builder_id));
 
-            //alert($builder_id);
-            */
-
-            $('#siteorigin-page-builder-widget-' + $builder_id).on( 'click', function(){
+            $(this).find('.siteorigin-panels-display-builder-field').on( 'click', function(){
+                //$('#siteorigin-page-builder-widget-' + $builder_id).on( 'click', function(){
                 //$$.find( '.siteorigin-panels-display-builder-field').click(function(){
-                /*
-                console.log('click + open');
 
-                console.log(this);
-                console.log($(this));
-                console.log(builderView);
-                */
+
+                $$.closest('.acf-field-page-builder-field').data( 'view-id', builderView.cid );
+
+
+                if( $(cur_panel)[0] == $(this)[0] )
+                {
+                    return;
+                }
+
+                cur_panel = this;
+
                 builderView.dialog.openDialog();
+
+
             });
 
             // Trigger a global jQuery event after we've setup the builder view
@@ -121,11 +94,15 @@ jQuery(function(){
         });
     };
 
+
+
     var panels = window.siteoriginPanels;
 
     if(typeof jQuery.fn.soPanelsSetupBuilderField2 != 'undefined') {
         //console.log('running');
         jQuery( ".siteorigin-page-builder-field").soPanelsSetupBuilderField2( panels );
     }
+
+
 
 });

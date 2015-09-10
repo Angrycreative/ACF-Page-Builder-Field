@@ -90,9 +90,9 @@ function acf_field_page_builder_field_admin_enqueue_scripts()
     $dir = plugin_dir_url( __FILE__ );
 
     //wp_register_script( 'acf-input-page_builder_field', "{$dir}js/input.js" );
-    wp_enqueue_script('acf-input-page_builder_field', "{$dir}js/input.js", array('so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
+    wp_enqueue_script('acf-input-page_builder_field', "{$dir}js/input.js", array('jquery','acf-page-builder-field-init','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
 
-    wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
+    wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
     //wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('so-panels-admin'));
 
     //die(plugin_dir_url( __FILE__ ) . 'js/init.js');
