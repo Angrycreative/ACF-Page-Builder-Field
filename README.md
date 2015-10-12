@@ -6,7 +6,10 @@
 ## Output in theme
 
 ```
-    echo get_page_builder_field( 'page_builder_field_name' );
+    if( function_exists( 'get_page_builder_field' ))
+    {
+        echo get_page_builder_field( 'page_builder_data' );
+    }
 ```
 
 

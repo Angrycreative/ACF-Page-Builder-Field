@@ -357,8 +357,14 @@ add_action('acf/include_field_types', 'include_field_types_page_builder_field' )
 function include_field_types_page_builder_field( $version ) {
 
     ACFPB();
-
     include_once('acf-page_builder_field-v5.php');
+}
 
+if( !function_exists( 'get_page_builder_field' ) )
+{
+    function get_page_builder_field( $field )
+    {
+        return ACFPB()->get_page_builder_field( $field );
+    }
 }
 
