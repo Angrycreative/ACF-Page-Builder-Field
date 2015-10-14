@@ -324,6 +324,11 @@ class ACF_Page_Builder {
 
         global $acf_siteorigin_panels_inline_css;
 
+        if( empty( $acf_siteorigin_panels_inline_css ) || !is_array( $acf_siteorigin_panels_inline_css ) )
+        {
+            return;
+        }
+
         $styles = '';
 
         foreach( $acf_siteorigin_panels_inline_css AS $style_key => $style_data )
