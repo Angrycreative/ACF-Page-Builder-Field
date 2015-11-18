@@ -338,19 +338,22 @@ function ACFPB()
     return ACF_Page_Builder::get_instance();
 }
 
+add_action('init', function() {
 
-add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
-add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
+    add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
+    add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
 
+} );
 
 
 add_action('acf/include_field_types', 'include_field_types_page_builder_field' );
-// 2. Include field type for ACF5
-// $version = 5 and can be ignored until ACF6 exists
-function include_field_types_page_builder_field( $version ) {
+
+// $acf_version = 5 and can be ignored until ACF6 exists
+function include_field_types_page_builder_field( $acf_version ) {
 
     ACFPB();
     include_once('acf-page_builder_field-v5.php');
+
 }
 
 if( !function_exists( 'get_page_builder_field' ) )

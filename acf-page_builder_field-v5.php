@@ -137,7 +137,7 @@ class acf_field_page_builder_field extends acf_field {
 
 		if( empty( $panels_data ))
 		{
-			$panels_data = 'asdasd';
+			$panels_data = json_encode(array());
 		}
 
 		if( !is_string( $panels_data ) )
