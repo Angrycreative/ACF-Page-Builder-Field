@@ -62,10 +62,6 @@ class ACF_Page_Builder {
 
     }
 
-
-
-
-
     function get_page_builder_field( $field_key )
     {
         $uid = uniqid( true );
@@ -85,11 +81,6 @@ class ACF_Page_Builder {
     }
 
 
-
-
-
-
-
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
         global $panel_id;
@@ -107,9 +98,6 @@ class ACF_Page_Builder {
 
         return $attr;
     }
-
-
-
 
     function acf_field_page_builder_field_admin_enqueue_scripts()
     {
