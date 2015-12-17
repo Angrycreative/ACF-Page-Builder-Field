@@ -2,14 +2,13 @@
 /*
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://bitbucket.org/angrycreative/acf-so-page-builder-field
-Description: SHORT_DESCRIPTION
-Version: 1.0.0
-Author: Angry Creative
+Description: This plugin will add a page builder field in Advanced custom fields
+Version: 0.1.0
+Author: Peter Elmered, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
-
 
 
 class ACF_Page_Builder {
@@ -47,8 +46,6 @@ class ACF_Page_Builder {
 
     function init() {
 
-        // 1. set text domain
-        // Reference: https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
         load_plugin_textdomain( 'acf-page_builder_field', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 
         if( in_array( basename( get_page_template() ), $this->use_on ))
@@ -62,16 +59,13 @@ class ACF_Page_Builder {
 
     }
 
-
-
-
-
     function get_page_builder_field( $field_key )
     {
         $uid = uniqid( true );
         $len = strlen($uid);
 
         $field_id = 'acfpbf_'.substr($uid, $len - 6, 6);
+        $field_id = '';
 
         $output = '<div id="acf_page_builder_field_id_'.$field_id.'" >';
 
@@ -85,15 +79,11 @@ class ACF_Page_Builder {
     }
 
 
-
-
-
-
-
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
         global $panel_id;
 
+        # TODO: We need a better solution for this condintional
         if( basename( get_page_template() ) == 'page-with-sections.php')
         {
             global $panel_id;
@@ -107,9 +97,6 @@ class ACF_Page_Builder {
 
         return $attr;
     }
-
-
-
 
     function acf_field_page_builder_field_admin_enqueue_scripts()
     {
@@ -345,25 +332,30 @@ class ACF_Page_Builder {
 }
 
 
+
 function ACFPB()
 {
     return ACF_Page_Builder::get_instance();
 }
 
+add_action('init', function() {
 
-add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
-add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
+    add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
+    add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
 
+} );
 
 
 add_action('acf/include_field_types', 'include_field_types_page_builder_field' );
-// 2. Include field type for ACF5
-// $version = 5 and can be ignored until ACF6 exists
-function include_field_types_page_builder_field( $version ) {
+
+// $acf_version = 5 and can be ignored until ACF6 exists
+function include_field_types_page_builder_field( $acf_version ) {
 
     ACFPB();
     include_once('acf-page_builder_field-v5.php');
+
 }
+
 
 if( !function_exists( 'get_page_builder_field' ) )
 {

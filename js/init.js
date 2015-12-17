@@ -73,20 +73,9 @@ jQuery(function(){
                 //$('#siteorigin-page-builder-widget-' + $builder_id).on( 'click', function(){
                 //$$.find( '.siteorigin-panels-display-builder-field').click(function(){
 
-
                 $$.closest('.acf-field-page-builder-field').data( 'view-id', builderView.cid );
 
-
-                if( $(cur_panel)[0] == $(this)[0] )
-                {
-                    return;
-                }
-
-                cur_panel = this;
-
                 builderView.dialog.openDialog();
-
-
             });
 
             // Trigger a global jQuery event after we've setup the builder view
