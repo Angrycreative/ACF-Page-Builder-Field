@@ -19,7 +19,7 @@ class ACF_Page_Builder {
 
     protected static $instance = null;
 
-    public $use_on = array( 'page-with-sections.php' );
+    protected $use_on = array( );
 
     /**
      * Return an instance of this class.
@@ -46,6 +46,10 @@ class ACF_Page_Builder {
 
     function init() {
 
+        $this->use_on = apply_filters('acfpbf_use_on_tempates', array(
+            'page-with-sections.php'
+        ));
+
         load_plugin_textdomain( 'acf-page_builder_field', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 
         if( in_array( basename( get_page_template() ), $this->use_on ))
@@ -65,7 +69,6 @@ class ACF_Page_Builder {
         $len = strlen($uid);
 
         $field_id = 'acfpbf_'.substr($uid, $len - 6, 6);
-        $field_id = '';
 
         $output = '<div id="acf_page_builder_field_id_'.$field_id.'" >';
 
@@ -83,8 +86,7 @@ class ACF_Page_Builder {
     {
         global $panel_id;
 
-        # TODO: We need a better solution for this condintional
-        if( basename( get_page_template() ) == 'page-with-sections.php')
+        if( in_array( basename( get_page_template() ), $this->use_on ))
         {
             global $panel_id;
 

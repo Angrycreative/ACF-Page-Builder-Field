@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-This plugin will add a page builder  field type in Advanced custom fields.
+This plugin will add a page builder field type in Advanced custom fields.
 This is primarily for usage in ACFs flexible content layouts where you want to build more advanced layouts inside the ACF sections.
 
 = Note: this plugin is currently in beta - expect bugs. =
