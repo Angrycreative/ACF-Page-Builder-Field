@@ -19,7 +19,9 @@ class ACF_Page_Builder {
 
     protected static $instance = null;
 
-    protected $use_on = array( );
+    protected $use_on_templates = array( );
+
+    protected $use_on_current_page = null;
 
     /**
      * Return an instance of this class.
@@ -40,19 +42,15 @@ class ACF_Page_Builder {
     function __construct()
     {
         add_action('template_redirect', array($this, 'init'), 20);
-
-        //$this->init();
     }
 
     function init() {
 
-        $this->use_on = apply_filters('acfpbf_use_on_tempates', array(
-            'page-with-sections.php'
-        ));
+        $this->use_on = apply_filters('acfpbf_use_on_templates', array());
 
         load_plugin_textdomain( 'acf-page_builder_field', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
 
-        if( in_array( basename( get_page_template() ), $this->use_on ))
+        if( $this->use_plugin_on_current_page() )
         {
             add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
             add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
@@ -61,6 +59,32 @@ class ACF_Page_Builder {
             add_action( 'wp_footer', array( $this, 'output_styles' ) );
         }
 
+    }
+
+    function use_plugin_on_current_page() {
+
+        if( $this->use_on_current_page !== null ) {
+
+            if( in_array( basename( get_page_template() ), apply_filters('acfpbf_use_on_templates', array()) ) ) {
+                $use_on_current_page = true;
+            }
+            else {
+                $panels_data = get_post_meta( get_the_ID(), 'panels_data', true );
+
+                if( isset( $panels_data ) && ! empty( $panels_data ) )
+                {
+                    $use_on_current_page = false;
+                }
+                else
+                {
+                    $use_on_current_page = true;
+                }
+            }
+
+            $this->use_on_current_page = apply_filters('acfpbf_use_on_current_page', $use_on_current_page );
+        }
+
+        return $this->use_on_current_page;
     }
 
     function get_page_builder_field( $field_key )
@@ -84,9 +108,7 @@ class ACF_Page_Builder {
 
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
-        global $panel_id;
-
-        if( in_array( basename( get_page_template() ), $this->use_on ))
+        if( $this->use_plugin_on_current_page() )
         {
             global $panel_id;
 
