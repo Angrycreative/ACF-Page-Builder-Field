@@ -1,7 +1,7 @@
 {
-  "name"       : "angrycreative/acf-so-page-builder-field",
+  "name"       : "angrycreative/acf-page-builder-field",
   "description": "Site origin page builder field for ACF",
-  "homepage"   : "https://bitbucket.org/angrycreative/acf-so-page-builder-field",
+  "homepage"   : "https://bitbucket.org/angrycreative/acf-page-builder-field",
   "type"       : "wordpress-plugin",
   "license"    : "GPL-2.0+",
   "require"    : {
