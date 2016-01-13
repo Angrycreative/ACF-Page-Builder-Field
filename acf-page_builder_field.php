@@ -63,7 +63,7 @@ class ACF_Page_Builder {
 
     function use_plugin_on_current_page() {
 
-        if( $this->use_on_current_page !== null ) {
+        if( $this->use_on_current_page === null ) {
 
             if( in_array( basename( get_page_template() ), apply_filters('acfpbf_use_on_templates', array()) ) ) {
                 $use_on_current_page = true;
