@@ -1,7 +1,7 @@
 
 # ACF SO Page Builder Field
 
-Currently in Beta. We will relese the first public version in begining of 2016.
+Currently in Beta. We will release the first public version in beginning of 2016.
 
 
 ## How to use the plugin
