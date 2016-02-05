@@ -96,7 +96,11 @@ class ACF_Page_Builder {
 
         $output = '<div id="acf_page_builder_field_id_'.$field_id.'" >';
 
-        $panels_data = get_sub_field( $field_key );
+        $panels_data = get_field( $field_key );
+
+        if( !$panels_data ) {
+            $panels_data = get_sub_field( $field_key );
+        }
 
         $output .= $this->acf_siteorigin_panels_render( $field_id, $panels_data );
 
