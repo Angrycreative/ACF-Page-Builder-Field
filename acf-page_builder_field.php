@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Advanced Custom Fields: Page Builder Field
-Plugin URI: https://bitbucket.org/angrycreative/acf-so-page-builder-field
+Plugin URI: https://github.com/Angrycreative/ACF-Page-Builder-Field
 Description: This plugin will add a page builder field in Advanced custom fields
 Version: 0.1.0
 Author: Peter Elmered, Angry Creative
@@ -10,12 +10,9 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-
 class ACF_Page_Builder {
 
-
     protected $page_styles = '';
-
 
     protected static $instance = null;
 
@@ -37,7 +34,6 @@ class ACF_Page_Builder {
         }
         return self::$instance;
     }
-
 
     function __construct()
     {
@@ -126,15 +122,10 @@ class ACF_Page_Builder {
     {
         $dir = plugin_dir_url( __FILE__ );
 
-        //wp_register_script( 'acf-input-page_builder_field', "{$dir}js/input.js" );
         wp_enqueue_script('acf-input-page_builder_field', "{$dir}js/input.js", array('jquery','acf-page-builder-field-init','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
 
         wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
-        //wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('so-panels-admin'));
 
-        //die(plugin_dir_url( __FILE__ ) . 'js/init.js');
-
-        // scripts
         wp_enqueue_script(array('acf-page-builder-field-init'));
     }
 
@@ -227,30 +218,10 @@ class ACF_Page_Builder {
         if( $enqueue_css && !isset($acf_siteorigin_panels_inline_css[$post_id]) ) {
             wp_enqueue_style('siteorigin-panels-front');
 
-            //var_dump($panels_data);
-
             $acf_siteorigin_panels_inline_css[$panel_id] = siteorigin_panels_generate_css($post_id, $panels_data);
-            /*
-            var_dump($acf_siteorigin_panels_inline_css);
-            die();
-            */
         }
 
         $this->page_styles = $acf_siteorigin_panels_inline_css;
-
-        /*
-        echo '<style >';
-        foreach( $acf_siteorigin_panels_inline_css AS $style_key => $style )
-        {
-            $search = array( '#pgc', '#pg', '#pl' );
-            $replace = array( '#'.$style_key.'-pgc', '#'.$style_key.'-pg', '#'.$style_key.'-pl' );
-
-            $style = str_replace($search, $replace, $style);
-
-            echo $style;
-        }
-        echo '</style>';
-        */
 
         echo apply_filters( 'siteorigin_panels_before_content', '', $panels_data, $post_id );
 
@@ -321,11 +292,7 @@ class ACF_Page_Builder {
 
         echo '</div>';
 
-
         $html = ob_get_clean();
-
-        // Reset the current post
-        //$siteorigin_panels_current_post = $old_current_post;
 
         return apply_filters( 'siteorigin_panels_render', $html, $post_id, !empty($post) ? $post : null );
     }

@@ -1,10 +1,20 @@
 {
-  "name"       : "angrycreative/acf-page-builder-field",
-  "description": "Site origin page builder field for ACF",
-  "homepage"   : "https://bitbucket.org/angrycreative/acf-page-builder-field",
-  "type"       : "wordpress-plugin",
-  "license"    : "GPL-2.0+",
+    "name"       : "angrycreative/acf-page-builder-field",
+    "description": "Site origin page builder field for ACF",
+    "homepage"   : "https://github.com/Angrycreative/ACF-Page-Builder-Field",
+    "type"       : "wordpress-plugin",
+    "license"    : "GPL-2.0+",
+    "authors"     : [
+        {
+            "name"    : "Peter Elmered",
+            "email"   : "peter@elmered.com",
+            "homepage": "http://www.elmered.com"
+        }
+    ],
+    "support"     : {
+        "issues": "https://github.com/Angrycreative/ACF-Page-Builder-Field/issues"
+    },
   "require"    : {
     "composer/installers": "~1.0"
-  }
+  },
 }
