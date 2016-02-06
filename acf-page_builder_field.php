@@ -99,13 +99,12 @@ class ACF_Page_Builder {
     }
 
     function render_page_builder_field( $value, $post_id, $field ) {
-        $field_key = $field['key'];
         $uid = uniqid( true );
         $len = strlen($uid);
 
         $field_id = 'acfpbf_'.substr($uid, $len - 6, 6);
 
-        $output = '<div id="acf_page_builder_field_id_'.$field_id.'" >';
+        $output = '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
 
         $output .= $this->acf_siteorigin_panels_render( $field_id, $value );
 
