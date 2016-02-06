@@ -10,6 +10,8 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+register_activation_hook( __FILE__, array( 'ACF_Page_Builder', 'check_required_plugins' ) );
+
 class ACF_Page_Builder {
 
     protected $page_styles = '';
@@ -35,9 +37,21 @@ class ACF_Page_Builder {
         return self::$instance;
     }
 
-    function __construct()
-    {
+    function __construct() {
         add_action('template_redirect', array($this, 'init'), 20);
+        $this->check_required_plugins( true );
+    }
+
+    static function check_required_plugins( $already_active ) {
+        if( class_exists( 'acf' ) && is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
+            return true;
+        } else if ( $already_active ) {
+            deactivate_plugins( plugin_basename( __FILE__ ) );
+        } else {
+            wp_die(
+                '<p>This plugin can not be activated because it requires Advances Custom Fields and Site Origin Page Builder to be active. </p> <a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Back to plugins page', 'my_plugin' ) . '</a>'
+            );
+        }
     }
 
     function init() {
@@ -359,4 +373,3 @@ if( !function_exists( 'get_page_builder_field' ) )
         return ACFPB()->get_page_builder_field( $field );
     }
 }
-
