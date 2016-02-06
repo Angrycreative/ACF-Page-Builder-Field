@@ -37,7 +37,7 @@ class ACF_Page_Builder {
 
 
     /**
-     * Return an instance of this class.
+     * Return an instance of this class. Singleton pattern.
      *
      * @since     0.1.0
      *
@@ -51,12 +51,21 @@ class ACF_Page_Builder {
         return self::$instance;
     }
 
-    function __construct() {
+    private function __construct() {
         add_action('template_redirect', array($this, 'init'), 20);
+
+        // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins( true );
     }
 
+    /**
+     * Check if required plugins are activated. If not deactivate this plugin to avoid problems and show an error
+     * message when you try to activate it.
+     *
+     * @param $already_activated
+     * @return bool
+     */
     static function check_required_plugins( $already_activated ) {
         if( class_exists( 'acf' ) && is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
             return true;
@@ -73,23 +82,34 @@ class ACF_Page_Builder {
 
         if( $this->use_plugin_on_current_page() )
         {
+            // Prefix the panel id to make it unique for every field on a page
             add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
             add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
             add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
 
+            // The styles should outputted once per page, in the footer
             add_action( 'wp_footer', array( $this, 'output_styles' ) );
         }
 
     }
 
+    /**
+     * Checks if this plugin should be activated in current page. This plugin should not be activated on normal page builder pages.
+     * Uses the filter acfpbf_use_on_templates(recommended) to activate on certain page templates, otherwise tries to autodetect.
+     *
+     * @return boolean
+     */
     function use_plugin_on_current_page() {
 
         if( $this->use_on_current_page === null ) {
 
+            // Apply the filter for getting page templates to activate the page builder field for and check it
             if( in_array( basename( get_page_template() ), apply_filters('acfpbf_use_on_templates', array()) ) ) {
                 $use_on_current_page = true;
             }
             else {
+                // If page has panels_data meta, it is a normal page builder field.
+                // It could also be orphaned data, which means it's not 100% reliable
                 $panels_data = get_post_meta( get_the_ID(), 'panels_data', true );
 
                 if( isset( $panels_data ) && ! empty( $panels_data ) )
@@ -119,6 +139,14 @@ class ACF_Page_Builder {
         return $this->use_on_current_page;
     }
 
+    /**
+     * Generate HTML for a field
+     *
+     * @param $value
+     * @param $post_id
+     * @param $field
+     * @return string
+     */
     function render_page_builder_field( $value, $post_id, $field ) {
         $uid = uniqid( true );
         $len = strlen($uid);
@@ -134,6 +162,17 @@ class ACF_Page_Builder {
         return $output;
     }
 
+    /**
+     * Prefixes the panel id to make it unique for every field on a page.
+     * Hooked in on:
+     *  - siteorigin_panels_row_attributes
+     *  - siteorigin_panels_row_cell_attributes
+     *  - siteorigin_panels_layout_attributes
+     *
+     * @param $attr
+     * @param $panels_data
+     * @return mixed
+     */
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
         if( $this->use_plugin_on_current_page() )
@@ -150,11 +189,19 @@ class ACF_Page_Builder {
         return $attr;
     }
 
+    /**
+     * Enqueues the scripts that makes the ACF field work in the admin views
+     */
     function acf_field_page_builder_field_admin_enqueue_scripts()
     {
         wp_enqueue_script('acf-input-page_builder_field', plugin_dir_url( __FILE__ ).'js/input.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
     }
 
+    /**
+     * This is a rewrite of siteorigin_panels_render function in the SiteOrigin Page Builder plugin
+     *
+     * @return String - HTML of page builder field
+     */
     function acf_siteorigin_panels_render( $panel_id, $panels_data ) {
 
         $GLOBALS['panel_id'] = $panel_id;
@@ -323,10 +370,14 @@ class ACF_Page_Builder {
     }
 
 
+    /**
+     * Output all the styles for the current page(all ACF fields in one chunk)
+     */
     function output_styles() {
 
         global $acf_siteorigin_panels_inline_css;
 
+        // If we don't have any styles queued, bail out
         if( empty( $acf_siteorigin_panels_inline_css ) || !is_array( $acf_siteorigin_panels_inline_css ) )
         {
             return;
@@ -334,6 +385,7 @@ class ACF_Page_Builder {
 
         $styles = '';
 
+        // Set unique IDs on the styles so we can target each field with CSS separately
         foreach( $acf_siteorigin_panels_inline_css AS $style_key => $style_data )
         {
             $search = array( '#pgc', '#pg', '#pl' );
@@ -372,7 +424,9 @@ add_action('init', function() {
 } );
 
 
-
+/**
+ * Register ACF field and instantiate the plugin
+ */
 add_action('acf/include_field_types', 'include_field_types_page_builder_field' );
 
 // $acf_version = 5 and can be ignored until ACF6 exists
