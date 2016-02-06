@@ -360,12 +360,3 @@ function include_field_types_page_builder_field( $acf_version ) {
     include_once('acf-page_builder_field-v5.php');
 
 }
-
-
-if( !function_exists( 'get_page_builder_field' ) )
-{
-    function get_page_builder_field( $field )
-    {
-        return ACFPB()->get_page_builder_field( $field );
-    }
-}
