@@ -132,7 +132,7 @@ class ACF_Page_Builder {
         wp_enqueue_script('acf-input-page_builder_field', plugin_dir_url( __FILE__ ).'js/input.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
     }
 
-    function acf_siteorigin_panels_render( $panel_id, $panels_data, $enqueue_css = true ) {
+    function acf_siteorigin_panels_render( $panel_id, $panels_data ) {
 
         $GLOBALS['panel_id'] = $panel_id;
 
@@ -142,7 +142,6 @@ class ACF_Page_Builder {
         }
 
         if( empty($post_id) ) $post_id = get_the_ID();
-
 
         $panels_data = apply_filters( 'siteorigin_panels_data', $panels_data, $post_id, $panel_id );
 
@@ -218,7 +217,7 @@ class ACF_Page_Builder {
         global $acf_siteorigin_panels_inline_css;
         if( empty($acf_siteorigin_panels_inline_css) ) $acf_siteorigin_panels_inline_css = array();
 
-        if( $enqueue_css && !isset($acf_siteorigin_panels_inline_css[$post_id]) ) {
+        if( !isset($acf_siteorigin_panels_inline_css[$post_id]) ) {
             wp_enqueue_style('siteorigin-panels-front');
 
             $acf_siteorigin_panels_inline_css[$panel_id] = siteorigin_panels_generate_css($post_id, $panels_data);
