@@ -14,13 +14,27 @@ register_activation_hook( __FILE__, array( 'ACF_Page_Builder', 'check_required_p
 
 class ACF_Page_Builder {
 
+    /**
+     * Variable that holds the CSS/styles for the current page
+     *
+     * @var string
+     */
     protected $page_styles = '';
 
+    /**
+     * Keeps track of if we should activate the plugin on current page
+     *
+     * @var array - Array of page templates
+     */
+    protected $use_on_current_page = null;
+
+    /**
+     * Holds the instance of this class
+     *
+     * @var null
+     */
     protected static $instance = null;
 
-    protected $use_on_templates = array( );
-
-    protected $use_on_current_page = null;
 
     /**
      * Return an instance of this class.
@@ -57,8 +71,6 @@ class ACF_Page_Builder {
 
     function init() {
 
-        $this->use_plugin_on_current_page = apply_filters('acfpbf_use_on_templates', array());
-
         if( $this->use_plugin_on_current_page() )
         {
             add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
@@ -90,7 +102,18 @@ class ACF_Page_Builder {
                 }
             }
 
-            $this->use_on_current_page = apply_filters('acfpbf_use_on_current_page', $use_on_current_page );
+            global $template;
+            if( isset( $template ) )
+            {
+                $template_name = str_replace(get_template_directory() . '/', '', $template);
+            }
+            else
+            {
+                $template = '';
+            }
+
+            // Allow value to be altered by theme
+            $this->use_on_current_page = apply_filters('acfpbf_use_on_current_page', $use_on_current_page, $template_name );
         }
 
         return $this->use_on_current_page;
