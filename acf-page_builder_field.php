@@ -129,13 +129,7 @@ class ACF_Page_Builder {
 
     function acf_field_page_builder_field_admin_enqueue_scripts()
     {
-        $dir = plugin_dir_url( __FILE__ );
-
-        wp_enqueue_script('acf-input-page_builder_field', "{$dir}js/input.js", array('jquery','acf-page-builder-field-init','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
-
-        wp_register_script('acf-page-builder-field-init', plugin_dir_url( __FILE__ ) . 'js/init.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
-
-        wp_enqueue_script(array('acf-page-builder-field-init'));
+        wp_enqueue_script('acf-input-page_builder_field', plugin_dir_url( __FILE__ ).'js/input.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
     }
 
     function acf_siteorigin_panels_render( $panel_id, $panels_data, $enqueue_css = true ) {
@@ -331,19 +325,30 @@ class ACF_Page_Builder {
 
 }
 
-
-
+/**
+ * Function to access the plugin object ( usage: ACFPB()->method() )
+ *
+ * @return object
+ */
 function ACFPB()
 {
     return ACF_Page_Builder::get_instance();
 }
 
+
+/**
+ * Enqueue admin scripts to make the page builder field work in the admin views
+ */
 add_action('init', function() {
 
-    add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
-    add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
+    if( is_admin() )
+    {
+        add_action( 'admin_print_scripts-post-new.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ) , 999 );
+        add_action( 'admin_print_scripts-post.php', array( ACFPB(), 'acf_field_page_builder_field_admin_enqueue_scripts' ), 999 );
+    }
 
 } );
+
 
 
 add_action('acf/include_field_types', 'include_field_types_page_builder_field' );
