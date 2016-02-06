@@ -39,13 +39,14 @@ class ACF_Page_Builder {
 
     function __construct() {
         add_action('template_redirect', array($this, 'init'), 20);
+        add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins( true );
     }
 
-    static function check_required_plugins( $already_active ) {
+    static function check_required_plugins( $already_activated ) {
         if( class_exists( 'acf' ) && is_plugin_active( 'siteorigin-panels/siteorigin-panels.php' ) ) {
             return true;
-        } else if ( $already_active ) {
+        } else if ( $already_activated ) {
             deactivate_plugins( plugin_basename( __FILE__ ) );
         } else {
             wp_die(
@@ -97,8 +98,8 @@ class ACF_Page_Builder {
         return $this->use_on_current_page;
     }
 
-    function get_page_builder_field( $field_key )
-    {
+    function render_page_builder_field( $value, $post_id, $field ) {
+        $field_key = $field['key'];
         $uid = uniqid( true );
         $len = strlen($uid);
 
@@ -106,19 +107,12 @@ class ACF_Page_Builder {
 
         $output = '<div id="acf_page_builder_field_id_'.$field_id.'" >';
 
-        $panels_data = get_field( $field_key );
-
-        if( !$panels_data ) {
-            $panels_data = get_sub_field( $field_key );
-        }
-
-        $output .= $this->acf_siteorigin_panels_render( $field_id, $panels_data );
+        $output .= $this->acf_siteorigin_panels_render( $field_id, $value );
 
         $output .= '</div>';
 
         return $output;
     }
-
 
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
