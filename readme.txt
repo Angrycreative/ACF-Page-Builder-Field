@@ -1,5 +1,5 @@
 === Advanced Custom Fields: ACF Page Builder Field Field ===
-Contributors: pekz0r, angrycreative
+Contributors: pekz0r, moelleer, angrycreative
 Tags: acf, page builder, flexible content, flexibale fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.4
