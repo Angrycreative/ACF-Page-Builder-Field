@@ -129,7 +129,7 @@ class ACF_Page_Builder {
             }
             else
             {
-                $template = '';
+                $template_name = '';
             }
 
             // Allow value to be altered by theme
