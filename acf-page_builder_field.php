@@ -57,9 +57,7 @@ class ACF_Page_Builder {
 
     function init() {
 
-        $this->use_on = apply_filters('acfpbf_use_on_templates', array());
-
-        load_plugin_textdomain( 'acf-page_builder_field', false, dirname( plugin_basename(__FILE__) ) . '/lang/' );
+        $this->use_plugin_on_current_page = apply_filters('acfpbf_use_on_templates', array());
 
         if( $this->use_plugin_on_current_page() )
         {
