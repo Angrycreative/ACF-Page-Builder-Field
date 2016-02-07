@@ -13,6 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 register_activation_hook( __FILE__, array( 'ACF_Page_Builder', 'check_required_plugins' ) );
 
 class ACF_Page_Builder {
+    
+    /**
+     * Variable that tells us if the plugin has added the needed filters
+     *
+     * @var boolean
+     */
+    protected $activated = false;
 
     /**
      * Variable that holds the CSS/styles for the current page
@@ -52,9 +59,30 @@ class ACF_Page_Builder {
     }
 
     private function __construct() {
+        // add_action('template_redirect', array($this, 'init'), 20);
+
         // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins( true );
+    }
+
+    /**
+     * Add the needed filters for correct output
+     */
+    function init() {
+        if( !$this->activated) {
+
+            // Prefix the panel id to make it unique for every field on a page
+            add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+            add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+            add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+            
+            // The styles should outputted once per page, in the footer
+            add_action( 'wp_footer', array( $this, 'output_styles' ) );
+
+            $this->activated = true;
+
+        }
     }
 
     /**
@@ -97,13 +125,7 @@ class ACF_Page_Builder {
 
         if( $acf_page_builder_content ) {
 
-            // Prefix the panel id to make it unique for every field on a page
-            add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-
-            // The styles should outputted once per page, in the footer
-            add_action( 'wp_footer', array( $this, 'output_styles' ) );
+            $this->init();
 
             $output .= '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
 
@@ -112,8 +134,6 @@ class ACF_Page_Builder {
             $output .= '</div>';
 
         }
-
-
 
         return $output;
     }
