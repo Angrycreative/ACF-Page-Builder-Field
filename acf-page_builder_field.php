@@ -71,6 +71,11 @@ class ACF_Page_Builder {
      */
     function init() {
 
+        // Only add the filters once
+        if( $this->activated ) {
+            return true;
+        }
+
         // Prefix the panel id to make it unique for every field on a page
         add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
         add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
@@ -123,9 +128,7 @@ class ACF_Page_Builder {
 
         if( $acf_page_builder_content ) {
 
-            if( !$this->activated ) {
-                $this->init();
-            }
+            $this->init();
 
             $output .= '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
 
