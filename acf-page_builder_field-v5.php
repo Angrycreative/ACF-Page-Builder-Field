@@ -33,7 +33,7 @@ class acf_field_page_builder_field extends acf_field {
 		/*
 		*  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 		*/
-		$this->category = 'basic';
+		$this->category = 'content';
 
 		/*
 		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
