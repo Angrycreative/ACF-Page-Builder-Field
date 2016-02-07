@@ -70,19 +70,17 @@ class ACF_Page_Builder {
      * Add the needed filters for correct output
      */
     function init() {
-        if( !$this->activated) {
 
-            // Prefix the panel id to make it unique for every field on a page
-            add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            
-            // The styles should outputted once per page, in the footer
-            add_action( 'wp_footer', array( $this, 'output_styles' ) );
+        // Prefix the panel id to make it unique for every field on a page
+        add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        
+        // The styles should outputted once per page, in the footer
+        add_action( 'wp_footer', array( $this, 'output_styles' ) );
 
-            $this->activated = true;
+        $this->activated = true;
 
-        }
     }
 
     /**
@@ -125,7 +123,9 @@ class ACF_Page_Builder {
 
         if( $acf_page_builder_content ) {
 
-            $this->init();
+            if( !$this->activated ) {
+                $this->init();
+            }
 
             $output .= '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
 
