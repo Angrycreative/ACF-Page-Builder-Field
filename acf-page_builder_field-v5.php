@@ -80,33 +80,7 @@ class acf_field_page_builder_field extends acf_field {
 	*  @return	n/a
 	*/
 	function render_field( $field ) {
-
-		$builder_id = uniqid();
-		$panels_data = $field['value'];
-
-		if( empty( $panels_data ))
-		{
-			$panels_data = json_encode(array());
-		}
-
-		if( !is_string( $panels_data ) )
-		{
-			$panels_data = json_encode( $panels_data );
-		}
-
-		?>
-		<div class="siteorigin-page-builder-field siteorigin-panels-builder-field" id="siteorigin-page-builder-widget-<?php echo esc_attr( $builder_id ) ?>" data-builder-id="<?php echo esc_attr( $builder_id ) ?>" data-type="layout_widget">
-
-			<p>
-				<a href="#" class="button-secondary siteorigin-panels-display-builder-field" id="open-builder-button-<?php echo esc_attr( $builder_id ) ?>" ><?php _e('Open Builder', 'siteorigin-panels') ?></a>
-			</p>
-
-			<input type="hidden" data-panels-filter="json_parse" value="<?php echo esc_attr($panels_data); ?>" class="acf-panels-data" name="<?php echo $field['name'] ?>" id="panels_data_<?php echo $builder_id ?>" />
-			<script type="text/javascript">
-				document.getElementById('panels_data_<?php echo $builder_id ?>').value = decodeURIComponent("<?php echo rawurlencode( $panels_data ); ?>");
-			</script>
-		</div>
-		<?php
+        ACFPB()->render_admin_field( $field, 5 );
 	}
 	
 }
