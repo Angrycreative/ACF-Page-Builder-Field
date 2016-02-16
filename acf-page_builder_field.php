@@ -68,7 +68,7 @@ class ACF_Page_Builder {
      */
     static function check_required_plugins( $already_activated ) {
         // Check if SiteOrigin Page Builder and ACF is installed and active
-        if( function_exists( 'siteorigin_panels_render' ) && class_exists( 'acf' ) {
+        if( function_exists( 'siteorigin_panels_render' ) && class_exists( 'acf' ) ) {
             return true;
         } else if ( $already_activated ) {
             deactivate_plugins( plugin_basename( __FILE__ ) );
