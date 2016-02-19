@@ -195,7 +195,7 @@ class ACF_Page_Builder {
      */
     function acf_field_page_builder_field_admin_enqueue_scripts()
     {
-        wp_enqueue_script('acf-input-page_builder_field', plugin_dir_url( __FILE__ ).'js/input.js', array('jquery','so-panels-admin','so-panels-admin-live-editor'), '1.0', true);
+        wp_enqueue_script('acf-input-page_builder_field', plugin_dir_url( __FILE__ ).'js/input.js', array('jquery','so-panels-admin'), '1.0', true);
     }
 
     /**

@@ -39,7 +39,7 @@ jQuery(function($){
                 } );
 
                 // Set the parent for all the sub dialogs
-                builderView.setDialogParents(soPanelsOptions.loc.layout_widget, dialog);
+                builderView.setDialogParents(panelsOptions.loc.layout_widget, dialog);
             }
 
             if( $$.find('input.acf-panels-data').val() == "null" )
@@ -59,7 +59,7 @@ jQuery(function($){
             $$.data( 'view-id', builderView.cid );
 
             // Set up the dialog opening
-            builderView.setDialogParents(soPanelsOptions.loc.layout_widget, builderView.dialog);
+            builderView.setDialogParents(panelsOptions.loc.layout_widget, builderView.dialog);
 
             $builder_id = $$.data('builder-id');
 
