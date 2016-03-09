@@ -29,7 +29,7 @@ This plugin conflicts with the normal page builder pages. Becase of that we need
 Use it like this:
 
 ```php
-add_filter('acfpbf_use_on_templates', function(){
+add_filter( 'acfpbf_use_on_templates', function() {
     return array( 'page-with-acf.php', 'page-acf-flexible-content' );
 });
 ```
@@ -37,14 +37,12 @@ add_filter('acfpbf_use_on_templates', function(){
 If you want more control you can use the `acfpbf_use_on_current_page`-filter to write your own logic for when to activate the field.
 
 ```php
-add_filter('acfpbf_use_on_current_page', function( $use_on_current_page, $template_name ){
+add_filter( 'acfpbf_use_on_current_page', function( $use_on_current_page, $template_name ) {
+    if( $template_name == 'my-custom-template.php' ) {
+        return true;
+    }
 	
-	if( $template_name == 'my-custom-template.php' )
-	{
-		return true;
-	}
-	
-	return $use_on_current_page;
+    return $use_on_current_page;
 });
 ```
 
@@ -56,10 +54,9 @@ add_filter('acfpbf_use_on_current_page', function( $use_on_current_page, $templa
 ### Output in theme
 
 ```php
-    if( get_field( 'page_builder_field' ) )
-    {
-    	echo get_field( 'page_builder_field' );
-    }
+if( get_field( 'page_builder_field' ) ) {
+    echo get_field( 'page_builder_field' );
+}
 ```
 
 
