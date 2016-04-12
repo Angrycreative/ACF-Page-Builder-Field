@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://github.com/Angrycreative/ACF-Page-Builder-Field
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 0.1.0
+Version: 1.0.0
 Author: Peter Elmered, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
