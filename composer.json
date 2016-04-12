@@ -8,7 +8,17 @@
         {
             "name"    : "Peter Elmered",
             "email"   : "peter@elmered.com",
-            "homepage": "http://www.elmered.com"
+            "homepage": "http://elmered.com"
+        },
+        {
+            "name"    : "Johan Möller",
+            "email"   : "johanmoller_@hotmail.com",
+            "homepage": "http://mollerjohan.se"
+        },
+        {
+            "name"    : "Angry Creative",
+            "email"   : "hej@angrycreative.se",
+            "homepage": "https://angrycreative.se"
         }
     ],
     "support"     : {
