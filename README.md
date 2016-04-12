@@ -6,10 +6,13 @@ Currently in Beta. We will release the first public version in beginning of 2016
 Adds a 'Page Builder Field' for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 
 ### Plugin requirements
- - The plugins require the following plugins: [Advanced custom fields 5+ (ACF Pro)](http://www.advancedcustomfields.com/), [SiteOrigin Page Builder](https://sv.wordpress.org/plugins/siteorigin-panels/)
+
+ - The plugins require the following plugins: 
+    - [Advanced Custom Fields 5+ (ACF Pro)](http://www.advancedcustomfields.com/)
+    - [SiteOrigin Page Builder](https://sv.wordpress.org/plugins/siteorigin-panels/)
  - PHP 5.3+
  
-Note: The plugin does not support the free version of Advanced Custom Fields(version 4). We consider adding support later if we feel that there is sufficent interest.
+Note: The plugin does not support the free version of Advanced Custom Fields(version 4). We consider adding support later if we feel that there is sufficient interest.
 
 ### How to use the plugin
 
@@ -22,33 +25,15 @@ More documentation coming soon.
 3. Create a new field via ACF and select the Page Builder Field type
 
 
-### Load the plugin
+### Known issues and limitations
 
-This plugin conflicts with the normal page builder pages. Becase of that we need to prevent the plugin form loading on pure page builder pages. The plugin tries to autodetect whether the current page is a p ure page builder page or not, but there are cases where this is not 100% acurate. Therefore we recomend that you use the `acfpbf_use_on_templates`-filter to specify the templates where you use the page builder field. 
+ - Use of ACF Page Builder field in widget areas.
+ - Some issues with Page Builder content in `the_content()` if an ACF Page Builder field is rendered before `the_content()`. We recommend using ACF WYSIWYGs or ACF Page Builder fields instead. 
 
-Use it like this:
-
-```php
-add_filter( 'acfpbf_use_on_templates', function() {
-    return array( 'page-with-acf.php', 'page-acf-flexible-content' );
-});
-```
-
-If you want more control you can use the `acfpbf_use_on_current_page`-filter to write your own logic for when to activate the field.
-
-```php
-add_filter( 'acfpbf_use_on_current_page', function( $use_on_current_page, $template_name ) {
-    if( $template_name == 'my-custom-template.php' ) {
-        return true;
-    }
-	
-    return $use_on_current_page;
-});
-```
 
 ### Integrate into your ACF fields.
 
-
+A blog post will be published soon about how we use this plugin to make an awesome CMS experience for our customers. 
 
 
 ### Output in theme

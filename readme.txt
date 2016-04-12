@@ -15,6 +15,14 @@ This is primarily for usage in ACFs flexible content layouts where you want to b
 
 = Note: this plugin is currently in beta - expect bugs. =
 
+= Requirements =
+
+This plugin requires:
+
+* Advanced Custom Fields 5+
+* Page Builder by SiteOrigin
+* PHP 5.3+
+
 = Theme integration =
 
 This is an example of a template using ACF Flexible Content.
@@ -48,13 +56,6 @@ endif;
 
 For more information, read about [flexible content on advancedcustomfields.com](http://www.advancedcustomfields.com/resources/flexible-content/).
 
-= Requirements =
-
-This plugin requires:
-
-* Advanced Custom Fields 5+
-* Page Builder by SiteOrigin
-* PHP 5.3+
 
 We recommend using the latest version of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin
 
@@ -64,15 +65,6 @@ We recommend using the latest version of WordPress, Advanced Custom Fields and P
 =======
 
 
-== Description ==
-
-
-
-= Requirements =
-
-This plugin requires:
-* ACF 5+
-* 5.3+
 
 == Installation ==
 
@@ -85,3 +77,9 @@ This plugin requires:
 
 = 0.1.0 =
 * Initial Beta Release.
+
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+* Stable version
