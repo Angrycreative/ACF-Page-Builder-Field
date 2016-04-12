@@ -36,8 +36,8 @@ if( have_rows('flexible_content_field_name') ) :
 
             case 'page_builder_layout':
 
-                if( function_exists( 'get_page_builder_field' )) {
-                    echo get_page_builder_field( 'page_builder_fieled' );
+                if( get_sub_field( 'page_builder_field' ) ) {
+                    echo get_sub_field( 'page_builder_field' );
                 }
 
                 break;
