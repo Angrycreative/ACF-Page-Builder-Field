@@ -14,11 +14,11 @@ This plugin will add a Page Builder field type in Advanced Custom Fields.
 This plugin will add a page builder field type in Advanced custom fields.
 This is primarily for usage in ACFs flexible content layouts where you want to build more advanced layouts inside the ACF sections.
 
-= Note: this plugin is currently in beta - expect bugs. =
+We think this plugin together with ACF Flexible Content gives the content editors just the right amount of freedom over page layouts.
+
+More information here will come shortly.
 
 = Requirements =
-
-This plugin requires:
 
 * Advanced Custom Fields 5+
 * Page Builder by SiteOrigin
@@ -26,7 +26,8 @@ This plugin requires:
 
 = Theme integration =
 
-This is an example of a template using ACF Flexible Content.
+We recommend using this plugin together with ACF Flexible Content for building beautiful landing pages.
+This is an example of a template using ACF Flexible Content:
 
 `
 if( have_rows('flexible_content_field_name') ) :
@@ -58,7 +59,7 @@ endif;
 For more information, read about [flexible content on advancedcustomfields.com](http://www.advancedcustomfields.com/resources/flexible-content/).
 
 
-We recommend using the latest version of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin
+We recommend using one of the latest versions of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin at all times for best compatibility.
 
 
 == Screenshots ==
@@ -67,12 +68,16 @@ We recommend using the latest version of WordPress, Advanced Custom Fields and P
 
 == Installation ==
 
-1. Copy the `acf-so-page-builder-field` folder into your `wp-content/plugins` folder
-2. Activate the ACF Page Builder Field plugin via the plugins admin page
-3. Create a new field via ACF and select the Page Builder Field type
-4. Please refer to the description for more info regarding the field type settings
+1. Copy the `acf-page-builder-field` folder into your `wp-content/plugins` folder.
+2. Activate the ACF Page Builder Field plugin via the plugins admin page.
+3. Create a new field via ACF and select the Page Builder Field type.
+4. Display the field in your theme's templates with `get_field()` or `get_sub_field()` as usual.
+5. Enjoy your improved CMS experience!
 
 == Changelog ==
+
+= 1.0.0 =
+* First stable release
 
 = 0.1.0 =
 * Initial Beta Release.
@@ -81,4 +86,4 @@ We recommend using the latest version of WordPress, Advanced Custom Fields and P
 == Upgrade Notice ==
 
 = 1.0.0 =
-* Stable version
+* This is a stable version. Please upgrade! Plase note that you might need to reactivate the plugin after updating.

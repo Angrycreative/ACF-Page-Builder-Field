@@ -408,6 +408,6 @@ add_action('acf/include_field_types', 'include_field_types_page_builder_field' )
 function include_field_types_page_builder_field( $acf_version ) {
 
     ACFPB();
-    include_once('acf-page_builder_field-v5.php');
+    include_once('acf-page-builder-field-v5.php');
 
 }
