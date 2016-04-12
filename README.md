@@ -1,18 +1,16 @@
 
 # ACF SiteOrigin Page Builder Field
 
-Currently in Beta. We will release the first public version in beginning of 2016.
+Currently in Beta. We will release the first stable version (1.0.0) in Q2 of 2016.
 
-Adds a 'Page Builder Field' for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
+Adds a "Page Builder Field" for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 
 ### Plugin requirements
 
  - The plugins require the following plugins: 
-    - [Advanced Custom Fields 5+ (ACF Pro)](http://www.advancedcustomfields.com/)
+    - [Advanced Custom Fields 5+ (ACF Pro)](http://www.advancedcustomfields.com/). Support ACF version 4 coming soon. [See issue for updates](https://github.com/Angrycreative/ACF-Page-Builder-Field/issues/3).
     - [SiteOrigin Page Builder](https://sv.wordpress.org/plugins/siteorigin-panels/)
  - PHP 5.3+
- 
-Note: The plugin does not support the free version of Advanced Custom Fields(version 4). We consider adding support later if we feel that there is sufficient interest.
 
 ### How to use the plugin
 
