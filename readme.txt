@@ -1,13 +1,13 @@
-=== Advanced Custom Fields: ACF Page Builder Field Field ===
+=== ACF Page Builder Field Field ===
 Contributors: pekz0r, moelleer, angrycreative
-Tags: acf, page builder, flexible content, flexibale fields, acf flexible content
+Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin will add a page builder field type in Advanced custom fields.
+This plugin will add a Page Builder field type in Advanced Custom Fields.
 
 == Description ==
 
@@ -60,12 +60,10 @@ For more information, read about [flexible content on advancedcustomfields.com](
 
 We recommend using the latest version of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin
 
-== Installation ==
 
-1. Copy the `acf-page-builder-field` folder into your `wp-content/plugins` folder
-=======
+== Screenshots ==
 
-
+1. This shows the field in WP-Admin. The page builder button opens up a Page Builder, just like the normal one from Site Origin.
 
 == Installation ==
 
