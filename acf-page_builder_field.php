@@ -13,6 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 register_activation_hook( __FILE__, array( 'ACF_Page_Builder', 'check_required_plugins' ) );
 
 class ACF_Page_Builder {
+    
+    /**
+     * Variable that tells us if the plugin has added the needed filters
+     *
+     * @var boolean
+     */
+    protected $activated = false;
 
     /**
      * Variable that holds the CSS/styles for the current page
@@ -52,11 +59,33 @@ class ACF_Page_Builder {
     }
 
     private function __construct() {
-        add_action('template_redirect', array($this, 'init'), 20);
+        // add_action('template_redirect', array($this, 'init'), 20);
 
         // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins( true );
+    }
+
+    /**
+     * Add the needed filters for correct output
+     */
+    function init() {
+
+        // Only add the filters once
+        if( $this->activated ) {
+            return true;
+        }
+
+        // Prefix the panel id to make it unique for every field on a page
+        add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
+        
+        // The styles should outputted once per page, in the footer
+        add_action( 'wp_footer', array( $this, 'output_styles' ) );
+
+        $this->activated = true;
+
     }
 
     /**
@@ -79,67 +108,6 @@ class ACF_Page_Builder {
         }
     }
 
-    function init() {
-
-        if( $this->use_plugin_on_current_page() )
-        {
-            // Prefix the panel id to make it unique for every field on a page
-            add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-            add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-
-            // The styles should outputted once per page, in the footer
-            add_action( 'wp_footer', array( $this, 'output_styles' ) );
-        }
-
-    }
-
-    /**
-     * Checks if this plugin should be activated in current page. This plugin should not be activated on normal page builder pages.
-     * Uses the filter acfpbf_use_on_templates(recommended) to activate on certain page templates, otherwise tries to autodetect.
-     *
-     * @return boolean
-     */
-    function use_plugin_on_current_page() {
-
-        if( $this->use_on_current_page === null ) {
-
-            // Apply the filter for getting page templates to activate the page builder field for and check it
-            if( in_array( basename( get_page_template() ), apply_filters('acfpbf_use_on_templates', array()) ) ) {
-                $use_on_current_page = true;
-            }
-            else {
-                // If page has panels_data meta, it is a normal page builder field.
-                // It could also be orphaned data, which means it's not 100% reliable
-                $panels_data = get_post_meta( get_the_ID(), 'panels_data', true );
-
-                if( isset( $panels_data ) && ! empty( $panels_data ) )
-                {
-                    $use_on_current_page = false;
-                }
-                else
-                {
-                    $use_on_current_page = true;
-                }
-            }
-
-            global $template;
-            if( isset( $template ) )
-            {
-                $template_name = str_replace(get_template_directory() . '/', '', $template);
-            }
-            else
-            {
-                $template_name = '';
-            }
-
-            // Allow value to be altered by theme
-            $this->use_on_current_page = apply_filters('acfpbf_use_on_current_page', $use_on_current_page, $template_name );
-        }
-
-        return $this->use_on_current_page;
-    }
-
     /**
      * Generate HTML for a field
      *
@@ -149,16 +117,27 @@ class ACF_Page_Builder {
      * @return string
      */
     function render_page_builder_field( $value, $post_id, $field ) {
+
         $uid = uniqid( true );
         $len = strlen($uid);
 
         $field_id = 'acfpbf_'.substr($uid, $len - 6, 6);
 
-        $output = '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
+        $acf_page_builder_content = $this->acf_siteorigin_panels_render( $field_id, $value );
 
-        $output .= $this->acf_siteorigin_panels_render( $field_id, $value );
+        $output = '';
 
-        $output .= '</div>';
+        if( $acf_page_builder_content ) {
+
+            $this->init();
+
+            $output .= '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
+
+            $output .= $acf_page_builder_content;
+
+            $output .= '</div>';
+
+        }
 
         return $output;
     }
@@ -176,16 +155,11 @@ class ACF_Page_Builder {
      */
     function siteorigin_panels_attributes( $attr, $panels_data )
     {
-        if( $this->use_plugin_on_current_page() )
-        {
-            global $panel_id;
+        global $panel_id;
 
-            $panel_id = $GLOBALS['panel_id'];
+        $panel_id = $GLOBALS['panel_id'];
 
-            $attr['id'] = $panel_id.'-'.$attr['id'];
-
-            return $attr;
-        }
+        $attr['id'] = $panel_id.'-'.$attr['id'];
 
         return $attr;
     }
