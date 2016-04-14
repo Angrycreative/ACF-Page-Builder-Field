@@ -315,7 +315,10 @@ class ACF_Page_Builder {
                 $cell_style_wrapper = siteorigin_panels_start_style_wrapper( 'cell', array(), !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
                 if( !empty($cell_style_wrapper) ) echo $cell_style_wrapper;
 
+                $widget_index = 0;
                 foreach ( $widgets as $pi => $widget_info ) {
+                    $widget_info['panels_info']['widget_index'] = $widget_index;
+                    $widget_index += 1;
                     // TODO this wrapper should go in the before/after widget arguments
                     $widget_style_wrapper = siteorigin_panels_start_style_wrapper( 'widget', array(), !empty( $widget_info['panels_info']['style'] ) ? $widget_info['panels_info']['style'] : array() );
                     siteorigin_panels_the_widget( $widget_info['panels_info'], $widget_info, $gi, $ci, $pi, $pi == 0, $pi == count( $widgets ) - 1, $post_id, $widget_style_wrapper );
