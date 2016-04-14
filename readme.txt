@@ -3,7 +3,7 @@ Contributors: pekz0r, moelleer, angrycreative
 Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.0.0-rc
+Stable tag: 1.0.0-rc.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,11 +12,23 @@ This plugin will add a Page Builder field type in Advanced Custom Fields.
 == Description ==
 
 This plugin will add a page builder field type in Advanced custom fields.
-This is primarily for usage in ACFs flexible content layouts where you want to build more advanced layouts inside the ACF sections.
+The field works just like any other ACF field type and you can use it however you want. `get_field()` returns the generated HTML and the CSS is outputed in the footer. We are using it together with ACFs flexible content layouts where you want to build more advanced layouts inside the ACF sections. This makes the content in ACFs flexible content truly flexible!
 
-We think this plugin together with ACF Flexible Content gives the content editors just the right amount of freedom over page layouts.
+Building a great CMS-experience for editors, designers and developers is really hard. They all have very different requirements and ideas about that a great CMS consists of and how it should work. How do you give the editors the tools they need to edit all the content, the designer the freedom they want about how things should look, and empower the developer with tools to provide this easily and efficently? 
+We think we have found a sweet spot when ut comes to the balance between freedom for for editors and designers and ease for developers to implement and maintain a beatifull site.  
 
-More information here will come shortly.
+= The editor =
+
+The editor can easily edit all the content and maintain a good look and feel of the website. The editor has the right amunt of freedom to be able to express themselfts, but enough structure to prevent them from going wild and ruin the page layout and design.
+
+= The designer =
+
+The designer can be creative and has the freedom they need express themselfs without making the life for the developers hard. 
+
+= The developer =
+
+The developer have the tools to easily create blocks/modules that fits good together.
+
 
 = Requirements =
 
