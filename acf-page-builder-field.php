@@ -118,6 +118,8 @@ class ACF_Page_Builder {
      */
     function render_page_builder_field( $value, $post_id, $field ) {
 
+        $this->init();
+
         $uid = uniqid( true );
         $len = strlen($uid);
 
@@ -128,8 +130,6 @@ class ACF_Page_Builder {
         $output = '';
 
         if( $acf_page_builder_content ) {
-
-            $this->init();
 
             $output .= '<div id="acf_page_builder_field_id_'.$field_id.'" class="acf-page-builder-field">';
 
