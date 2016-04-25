@@ -1,7 +1,7 @@
 
 # ACF SiteOrigin Page Builder Field
 
-Currently in Beta. We will release the first stable version (1.0.0) in Q2 of 2016.
+We are currently in the release candidate stage. We want to as many as possible to try the plugin in their configurations and setups and report any problems back to us. The first stable version (1.0.0) will be released as soon as we have collected enough feedback and fixed the issues that have been reported. We currently use it in production without any issues ourselfs and it should be safe to use this your current developemnt projects, or production enviornments if you test it thoroughly.
 
 Adds a "Page Builder Field" for the [Advanced Custom Fields](http://wordpress.org/extend/plugins/advanced-custom-fields/) WordPress plugin.
 
