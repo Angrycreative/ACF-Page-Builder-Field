@@ -26,7 +26,7 @@ More documentation coming soon.
 ### Known issues and limitations
 
  - Use of ACF Page Builder field in widget areas. We aim to fix this in a comming release.
- - Some issues with Page Builder content in `the_content()`(normal post content) if an ACF Page Builder field is rendered before `the_content()`. We recommend using ACF Page Builder fields instead and removing the normal post content completly on ACF-pages in WP-Admin. 
+ - Some issues with Page Builder content in `the_content()`(normal post content) if an ACF Page Builder field is rendered before `the_content()`. We recommend using ACF Page Builder fields instead and removing the normal post content completely on ACF-pages in WP-Admin. 
 
 
 ### Integrate into your ACF fields.
