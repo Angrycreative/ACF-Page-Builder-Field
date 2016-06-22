@@ -17,7 +17,8 @@ jQuery(function($){
 
             // Now for the view to display the builder
             var builderView = new panels.view.builder( {
-                model: builderModel
+                model: builderModel,
+                config: {}
             } );
 
             // Save panels data when we close the dialog, if we're in a dialog
