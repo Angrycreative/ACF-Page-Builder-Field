@@ -3,8 +3,8 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://wordpress.org/plugins/acf-page-builder-field/
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 1.0.0-rc.2
-Author: Peter Elmered, Johan Möller, Angry Creative
+Version: 1.0.0-rc.3
+Author: Peter Elmered, Johan Möller, Viktor Fröberg, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 register_activation_hook( __FILE__, array( 'ACF_Page_Builder', 'check_required_plugins' ) );
 
 class ACF_Page_Builder {
-    
+
     /**
      * Variable that tells us if the plugin has added the needed filters
      *
@@ -80,7 +80,7 @@ class ACF_Page_Builder {
         add_filter( 'siteorigin_panels_row_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
         add_filter( 'siteorigin_panels_row_cell_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
         add_filter( 'siteorigin_panels_layout_attributes', array( $this, 'siteorigin_panels_attributes' ), 10, 2 );
-        
+
         // The styles should outputted once per page, in the footer
         add_action( 'wp_footer', array( $this, 'output_styles' ) );
 

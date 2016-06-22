@@ -1,9 +1,9 @@
 === ACF Page Builder Field ===
-Contributors: pekz0r, moelleer, angrycreative
+Contributors: pekz0r, moelleer, viktorfroberg, angrycreative
 Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.5
-Stable tag: 1.0.0-rc.2
+Stable tag: 1.0.0-rc.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,8 +14,8 @@ This plugin will add a Page Builder field type in Advanced Custom Fields.
 This plugin will add a page builder field type in Advanced custom fields.
 The field works just like any other ACF field type and you can use it however you want. `get_field()` returns the generated HTML and the CSS is outputed in the footer. We are using it together with ACFs flexible content layouts where you want to build more advanced layouts inside the ACF sections. This makes the content in ACFs flexible content truly flexible!
 
-Building a great CMS-experience for editors, designers and developers is really hard. They all have very different requirements and ideas about that a great CMS consists of and how it should work. How do you give the editors the tools they need to edit all the content, the designer the freedom they want about how things should look, and empower the developer with tools to provide this easily and efficently? 
-We think we have found a sweet spot when ut comes to the balance between freedom for for editors and designers and ease for developers to implement and maintain a beatifull site.  
+Building a great CMS-experience for editors, designers and developers is really hard. They all have very different requirements and ideas about that a great CMS consists of and how it should work. How do you give the editors the tools they need to edit all the content, the designer the freedom they want about how things should look, and empower the developer with tools to provide this easily and efficently?
+We think we have found a sweet spot when ut comes to the balance between freedom for for editors and designers and ease for developers to implement and maintain a beatifull site.
 
 = The editor =
 
@@ -23,7 +23,7 @@ The editor can easily edit all the content and maintain a good look and feel of 
 
 = The designer =
 
-The designer can be creative and has the freedom they need express themselfs without making the life for the developers hard. 
+The designer can be creative and has the freedom they need express themselfs without making the life for the developers hard.
 
 = The developer =
 
@@ -89,7 +89,10 @@ We recommend using one of the latest versions of WordPress, Advanced Custom Fiel
 == Changelog ==
 
 = 1.0.0 =
-* First stable release
+* First stable release.
+
+= 1.0.0-rc.3 =
+* Support for version 2.4.9 of the Page Builder by Siteorigin plugin.
 
 = 0.1.0 =
 * Initial Beta Release.
@@ -98,4 +101,4 @@ We recommend using one of the latest versions of WordPress, Advanced Custom Fiel
 == Upgrade Notice ==
 
 = 1.0.0 =
-* This is a stable version. Please upgrade! Plase note that you might need to reactivate the plugin after updating.
+* This is a stable version. Please upgrade! Please note that you might need to reactivate the plugin after updating.
