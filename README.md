@@ -44,4 +44,4 @@ if( function_exists( 'get_field' ) && get_field( 'page_builder_field' ) ) {
 
 
 ### Changelog
-Please see `readme.txt` for changelog
+Please see `readme.txt` or [WordPress.org](https://wordpress.org/plugins/acf-page-builder-field/changelog/) for changelog
