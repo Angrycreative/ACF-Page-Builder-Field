@@ -37,7 +37,7 @@ A blog post will be published soon about how we use this plugin to make an aweso
 ### Output in theme
 
 ```php
-if( get_field( 'page_builder_field' ) ) {
+if( function_exists( 'get_field' ) && get_field( 'page_builder_field' ) ) {
     echo get_field( 'page_builder_field' );
 }
 ```
