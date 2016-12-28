@@ -99,16 +99,12 @@ class ACF_Page_Builder {
         // Check if SiteOrigin Page Builder and ACF is installed and active
         if( function_exists( 'siteorigin_panels_render' ) && class_exists( 'acf' ) ) {
             return true;
-        } else if ( $already_activated ) {
-            if( ! function_exists( 'deactivate_plugins' ) ){
-                require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-            }
-            
-            deactivate_plugins( plugin_basename( __FILE__ ) );
         } else {
-            wp_die(
-                '<p>This plugin can not be activated because it requires Advances Custom Fields and Site Origin Page Builder to be active. </p> <a href="' . admin_url( 'plugins.php' ) . '">' . __( 'Back to plugins page', 'my_plugin' ) . '</a>'
-            );
+            add_action( 'admin_notices', function() { ?>
+            <div class="notice-warning notice is-dismissible">
+                <p>Advanced Custom Fields: Page Builder Field will not work unless Advanced Custom Fields and Site Origin Page Builder is active.</p>
+            </div>    
+            <?php } );
         }
     }
 
