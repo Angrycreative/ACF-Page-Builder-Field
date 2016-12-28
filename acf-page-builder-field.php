@@ -100,6 +100,10 @@ class ACF_Page_Builder {
         if( function_exists( 'siteorigin_panels_render' ) && class_exists( 'acf' ) ) {
             return true;
         } else if ( $already_activated ) {
+            if( ! function_exists( 'deactivate_plugins' ) ){
+                require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            }
+            
             deactivate_plugins( plugin_basename( __FILE__ ) );
         } else {
             wp_die(
