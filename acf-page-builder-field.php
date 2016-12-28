@@ -63,7 +63,7 @@ class ACF_Page_Builder {
 
         // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
-        $this->check_required_plugins( true );
+        $this->check_required_plugins();
     }
 
     /**
@@ -95,7 +95,7 @@ class ACF_Page_Builder {
      * @param $already_activated
      * @return bool
      */
-    static function check_required_plugins( $already_activated ) {
+    static function check_required_plugins() {
         // Check if SiteOrigin Page Builder and ACF is installed and active
         if( function_exists( 'siteorigin_panels_render' ) && class_exists( 'acf' ) ) {
             return true;
