@@ -14,6 +14,8 @@ Adds a "Page Builder Field" for the [Advanced Custom Fields](http://wordpress.or
 
 ### How to use the plugin
 
+The page builder field can be used as any other ACF field. `get_field` will output the HTML for the page builder layout and the needed CSS will be generated on the page footer.
+
 More documentation coming soon.
 
 ### Installation
@@ -26,8 +28,8 @@ More documentation coming soon.
 ### Known issues and limitations
 
  - Use of ACF Page Builder field in widget areas. We aim to fix this in a comming release.
- - Some issues with Page Builder content in `the_content()`(normal post content) if an ACF Page Builder field is rendered before `the_content()`. We recommend using ACF Page Builder fields instead and removing the normal post content completely on ACF-pages in WP-Admin. 
-
+ - Does not work on ACF Option pages. We aim to fix this in a comming release.
+ - Some issues with Page Builder content in `the_content()`(normal post content) if an ACF Page Builder field is rendered before `the_content()`. This is due to the way the page builder works and we can't fix this in a good way. We recommend using ACF Page Builder fields instead and removing the normal post content completely on ACF-pages in WP-Admin as a workaround.
 
 ### Integrate into your ACF fields.
 

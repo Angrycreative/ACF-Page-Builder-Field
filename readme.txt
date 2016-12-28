@@ -3,7 +3,7 @@ Contributors: pekz0r, moelleer, viktorfroberg, angrycreative
 Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.5
-Stable tag: 1.0.0-rc.3
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,7 @@ The developer have the tools to easily create blocks/modules that fits good toge
 
 = Requirements =
 
-* Advanced Custom Fields 5+
+* Advanced Custom Fields 5+ (ACF 4 is not supported)
 * Page Builder by SiteOrigin
 * PHP 5.3+
 
@@ -70,9 +70,13 @@ endif;
 
 For more information, read about [flexible content on advancedcustomfields.com](http://www.advancedcustomfields.com/resources/flexible-content/).
 
+We also recommend using one of the latest versions of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin at all times for best compatibility.
 
-We recommend using one of the latest versions of WordPress, Advanced Custom Fields and Page Builder by SiteOrigin at all times for best compatibility.
+= Known issues and limitations =
 
+* Use of ACF Page Builder field in widget areas. We aim to fix this in a comming release.
+* Does not work on ACF Option pages. We aim to fix this in a comming release.
+* Some issues with Page Builder content in `the_content()`(normal post content) if an ACF Page Builder field is rendered before `the_content()`. This is due to the way the page builder works and we can't fix this in a good way. We recommend using ACF Page Builder fields instead and removing the normal post content completely on ACF-pages in WP-Admin as a workaround. 
 
 == Screenshots ==
 
