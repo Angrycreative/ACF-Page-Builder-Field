@@ -92,7 +92,7 @@ We also recommend using one of the latest versions of WordPress, Advanced Custom
 
 == Changelog ==
 
-= 1.0.! =
+= 1.0.1 =
 * Fix for Page Builder 2.5
 
 = 1.0.0 =

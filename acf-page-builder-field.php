@@ -64,16 +64,7 @@ class ACF_Page_Builder {
         // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins();
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 1 );
     }
-
-    /**
-	 * Enqueue the required styles
-	 */
-	function enqueue_styles() {
-		// Register the style to support possible lazy loading
-		wp_register_style( 'siteorigin-panels-front', SiteOrigin_Panels::front_css_url(), array() );
-	}
     /**
      * Add the needed filters for correct output
      */
