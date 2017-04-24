@@ -72,7 +72,6 @@ class ACF_Page_Builder {
 	 */
 	function enqueue_styles() {
 		// Register the style to support possible lazy loading
-        var_dump('HALLÅ');
 		wp_register_style( 'siteorigin-panels-front', SiteOrigin_Panels::front_css_url(), array() );
 	}
     /**
