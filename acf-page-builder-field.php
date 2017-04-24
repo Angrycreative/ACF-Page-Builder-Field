@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://wordpress.org/plugins/acf-page-builder-field/
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 1.0.0
+Version: 1.0.1
 Author: Peter Elmered, Johan Möller, Viktor Fröberg, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
@@ -64,8 +64,17 @@ class ACF_Page_Builder {
         // Generate HTML for get_field()
         add_filter('acf/format_value/type=page_builder_field', array( $this, 'render_page_builder_field' ), 10, 3);
         $this->check_required_plugins();
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 1 );
     }
 
+    /**
+	 * Enqueue the required styles
+	 */
+	function enqueue_styles() {
+		// Register the style to support possible lazy loading
+        var_dump('HALLÅ');
+		wp_register_style( 'siteorigin-panels-front', SiteOrigin_Panels::front_css_url(), array() );
+	}
     /**
      * Add the needed filters for correct output
      */
@@ -103,7 +112,7 @@ class ACF_Page_Builder {
             add_action( 'admin_notices', function() { ?>
             <div class="notice-warning notice is-dismissible">
                 <p>Advanced Custom Fields: Page Builder Field will not work unless Advanced Custom Fields and Site Origin Page Builder is active.</p>
-            </div>    
+            </div>
             <?php } );
         }
     }
@@ -116,6 +125,72 @@ class ACF_Page_Builder {
      * @param $field
      * @return string
      */
+
+     function start_style_wrapper( $name, $style = array(), $for = false ) {
+		$attributes = array();
+
+		if ( empty( $attributes['class'] ) ) {
+			$attributes['class'] = array();
+		}
+		if ( empty( $attributes['style'] ) ) {
+			$attributes['style'] = '';
+		}
+
+		// Get everything related to the style wrapper
+        $attributes = apply_filters( 'siteorigin_panels_' . $name . '_style_attributes', $attributes, $style );
+        $attributes = apply_filters( 'siteorigin_panels_general_style_attributes', $attributes, $style );
+
+        $standard_css = array();
+        $standard_css = apply_filters( 'siteorigin_panels_' . $name . '_style_css', $standard_css, $style );
+        $standard_css = apply_filters( 'siteorigin_panels_general_style_css', $standard_css, $style );
+
+        $mobile_css = array();
+        $mobile_css = apply_filters( 'siteorigin_panels_' . $name . '_style_mobile_css', $mobile_css, $style );
+        $mobile_css = apply_filters( 'siteorigin_panels_general_style_mobile_css', $mobile_css, $style );
+
+        // Remove anything we didn't actually use
+		if ( empty( $attributes['class'] ) ) {
+			unset( $attributes['class'] );
+		}
+		if ( empty( $attributes['style'] ) ) {
+			unset( $attributes['style'] );
+		}
+
+		$style_wrapper = '';
+		if ( ! empty( $attributes ) || ! empty( $standard_css ) || ! empty( $mobile_css ) ) {
+			if ( empty( $attributes['class'] ) ) {
+				$attributes['class'] = array();
+			}
+			$attributes['class'][] = 'panel-' . $name . '-style';
+			if ( ! empty( $for ) ) {
+				$attributes['class'][] = 'panel-' . $name . '-style-for-' . sanitize_html_class( $for );
+			}
+			$attributes['class'] = array_unique( $attributes['class'] );
+
+			// Filter and sanitize the classes
+			$attributes['class'] = apply_filters( 'siteorigin_panels_' . $name . '_style_classes', $attributes['class'], $attributes, $style );
+			$attributes['class'] = array_map( 'sanitize_html_class', $attributes['class'] );
+
+			$style_wrapper = '<div ';
+			foreach ( $attributes as $name => $value ) {
+				// Attributes start with _ are used for internal communication between filters, so are not added to the HTML
+				// We don't make use of this in our styling, so its left as a mechanism for other plugins.
+				if( substr( $name, 0, 1 ) === '_' ) continue;
+
+				if ( is_array( $value ) ) {
+					$style_wrapper .= $name . '="' . esc_attr( implode( " ", array_unique( $value ) ) ) . '" ';
+				} else {
+					$style_wrapper .= $name . '="' . esc_attr( $value ) . '" ';
+				}
+			}
+			$style_wrapper .= '>';
+
+			return $style_wrapper;
+		}
+
+		return $style_wrapper;
+	}
+
     function render_page_builder_field( $value, $post_id, $field ) {
 
         $this->init();
@@ -178,7 +253,7 @@ class ACF_Page_Builder {
      * @return String - HTML of page builder field
      */
     function acf_siteorigin_panels_render( $panel_id, $panels_data ) {
-
+        $renderer = SiteOrigin_Panels::renderer();
         $GLOBALS['panel_id'] = $panel_id;
 
         if( is_string( $panels_data ) )
@@ -264,8 +339,9 @@ class ACF_Page_Builder {
 
         if( !isset($acf_siteorigin_panels_inline_css[$post_id]) ) {
             wp_enqueue_style('siteorigin-panels-front');
+            $layout_data = $renderer->get_panels_layout_data( $panels_data );
+            $acf_siteorigin_panels_inline_css[$panel_id] = $renderer->generate_css( $post_id, $panels_data, $layout_data );
 
-            $acf_siteorigin_panels_inline_css[$panel_id] = siteorigin_panels_generate_css($post_id, $panels_data);
         }
 
         $this->page_styles = $acf_siteorigin_panels_inline_css;
@@ -274,7 +350,21 @@ class ACF_Page_Builder {
 
         foreach ( $grids as $gi => $cells ) {
 
+
+
+
+            $style_attributes = array();
+            if( !empty( $panels_data['grids'][$gi]['style']['class'] ) ) {
+                $style_attributes['class'] = array('panel-row-style-'.$panels_data['grids'][$gi]['style']['class']);
+            }
+
             $grid_classes = apply_filters( 'siteorigin_panels_row_classes', array('panel-grid'), $panels_data['grids'][$gi] );
+
+            // Themes can add their own attributes to the style wrapper
+            $row_style_wrapper = $this->start_style_wrapper( 'row', $style_attributes, !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
+            $grid_classes[] = ! empty( $row_style_wrapper ) ? 'panel-has-style' : 'panel-no-style';
+
+
             $grid_attributes = apply_filters( 'siteorigin_panels_row_attributes', array(
                 'class' => implode( ' ', $grid_classes ),
                 'id' => 'pg-' . $post_id . '-' . $gi
@@ -289,13 +379,9 @@ class ACF_Page_Builder {
             }
             echo '>';
 
-            $style_attributes = array();
-            if( !empty( $panels_data['grids'][$gi]['style']['class'] ) ) {
-                $style_attributes['class'] = array('panel-row-style-'.$panels_data['grids'][$gi]['style']['class']);
-            }
 
-            // Themes can add their own attributes to the style wrapper
-            $row_style_wrapper = siteorigin_panels_start_style_wrapper( 'row', $style_attributes, !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
+
+
             if( !empty($row_style_wrapper) ) echo $row_style_wrapper;
 
             foreach ( $cells as $ci => $widgets ) {
@@ -311,8 +397,8 @@ class ACF_Page_Builder {
                     echo $name.'="'.esc_attr($value).'" ';
                 }
                 echo '>';
+                $cell_style_wrapper = $this->start_style_wrapper( 'cell', array(), !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
 
-                $cell_style_wrapper = siteorigin_panels_start_style_wrapper( 'cell', array(), !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
                 if( !empty($cell_style_wrapper) ) echo $cell_style_wrapper;
 
                 $widget_index = 0;
@@ -320,7 +406,7 @@ class ACF_Page_Builder {
                     $widget_info['panels_info']['widget_index'] = $widget_index;
                     $widget_index += 1;
                     // TODO this wrapper should go in the before/after widget arguments
-                    $widget_style_wrapper = siteorigin_panels_start_style_wrapper( 'widget', array(), !empty( $widget_info['panels_info']['style'] ) ? $widget_info['panels_info']['style'] : array() );
+                    $widget_style_wrapper = $this->start_style_wrapper( 'widget', array(), !empty( $widget_info['panels_info']['style'] ) ? $widget_info['panels_info']['style'] : array() );
                     siteorigin_panels_the_widget( $widget_info['panels_info'], $widget_info, $gi, $ci, $pi, $pi == 0, $pi == count( $widgets ) - 1, $post_id, $widget_style_wrapper );
                 }
                 if ( empty( $widgets ) ) echo '&nbsp;';
