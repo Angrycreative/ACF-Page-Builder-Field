@@ -1,6 +1,6 @@
 === ACF Page Builder Field ===
-Contributors: pekz0r, moelleer, viktorfroberg, angrycreative
-Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
+Contributors: pekz0r, moelleer, viktorfroberg, lindstromer, angrycreative
+Tags: acf, page builder, site origin page builder, flexible content, flexible fields, acf flexible content
 Requires at least: 4.0
 Tested up to: 4.5
 Stable tag: 1.0.2
