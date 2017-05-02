@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://wordpress.org/plugins/acf-page-builder-field/
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 1.0.1
+Version: 1.0.2
 Author: Peter Elmered, Johan Möller, Viktor Fröberg, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
@@ -340,18 +340,15 @@ class ACF_Page_Builder {
 
         foreach ( $grids as $gi => $cells ) {
 
-
-
-
             $style_attributes = array();
             if( !empty( $panels_data['grids'][$gi]['style']['class'] ) ) {
-                $style_attributes['class'] = array('panel-row-style-'.$panels_data['grids'][$gi]['style']['class']);
+                $style_attributes['class'] = 'panel-row-style ' . $panels_data['grids'][$gi]['style']['class'];
             }
 
             $grid_classes = apply_filters( 'siteorigin_panels_row_classes', array('panel-grid'), $panels_data['grids'][$gi] );
 
             // Themes can add their own attributes to the style wrapper
-            $row_style_wrapper = $this->start_style_wrapper( 'row', $style_attributes, !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
+            $row_style_wrapper = $this->start_style_wrapper( 'row', $style_attributes, $post_id . '-' . $gi );
             $grid_classes[] = ! empty( $row_style_wrapper ) ? 'panel-has-style' : 'panel-no-style';
 
 
@@ -387,7 +384,7 @@ class ACF_Page_Builder {
                     echo $name.'="'.esc_attr($value).'" ';
                 }
                 echo '>';
-                $cell_style_wrapper = $this->start_style_wrapper( 'cell', array(), !empty($panels_data['grids'][$gi]['style']) ? $panels_data['grids'][$gi]['style'] : array() );
+                $cell_style_wrapper = $this->start_style_wrapper( 'cell', array(), $post_id . '-' . $gi  . '-' . $ci );
 
                 if( !empty($cell_style_wrapper) ) echo $cell_style_wrapper;
 
@@ -396,7 +393,7 @@ class ACF_Page_Builder {
                     $widget_info['panels_info']['widget_index'] = $widget_index;
                     $widget_index += 1;
                     // TODO this wrapper should go in the before/after widget arguments
-                    $widget_style_wrapper = $this->start_style_wrapper( 'widget', array(), !empty( $widget_info['panels_info']['style'] ) ? $widget_info['panels_info']['style'] : array() );
+                    $widget_style_wrapper = $this->start_style_wrapper( 'widget', array(), $post_id . '-' . $gi  . '-' . $ci . '-' . $pi );
                     siteorigin_panels_the_widget( $widget_info['panels_info'], $widget_info, $gi, $ci, $pi, $pi == 0, $pi == count( $widgets ) - 1, $post_id, $widget_style_wrapper );
                 }
                 if ( empty( $widgets ) ) echo '&nbsp;';
