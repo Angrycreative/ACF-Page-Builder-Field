@@ -393,7 +393,7 @@ class ACF_Page_Builder {
                     $widget_info['panels_info']['widget_index'] = $widget_index;
                     $widget_index += 1;
                     // TODO this wrapper should go in the before/after widget arguments
-                    $widget_style_wrapper = $this->start_style_wrapper( 'widget', array(), $post_id . '-' . $gi  . '-' . $ci . '-' . $pi );
+                    $widget_style_wrapper = $this->start_style_wrapper( 'widget', ! empty( $widget_info['panels_info']['style'] ) ? $widget_info['panels_info']['style'] : array(), $post_id . '-' . $gi  . '-' . $ci . '-' . $pi );
                     siteorigin_panels_the_widget( $widget_info['panels_info'], $widget_info, $gi, $ci, $pi, $pi == 0, $pi == count( $widgets ) - 1, $post_id, $widget_style_wrapper );
                 }
                 if ( empty( $widgets ) ) echo '&nbsp;';
