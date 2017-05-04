@@ -1,9 +1,9 @@
 === ACF Page Builder Field ===
-Contributors: pekz0r, moelleer, viktorfroberg, angrycreative
-Tags: acf, page builder, site origin page builder, flexible content, flexibale fields, acf flexible content
+Contributors: pekz0r, moelleer, viktorfroberg, lindstromer, angrycreative
+Tags: acf, page builder, site origin page builder, flexible content, flexible fields, acf flexible content
 Requires at least: 4.0
-Tested up to: 4.5
-Stable tag: 1.0.1
+Tested up to: 4.7.3
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,7 +33,7 @@ The developer have the tools to easily create blocks/modules that fits good toge
 = Requirements =
 
 * Advanced Custom Fields 5+ (ACF 4 is not supported)
-* Page Builder by SiteOrigin
+* Page Builder by SiteOrigin 2.5 or newer
 * PHP 5.3+
 
 = Theme integration =
@@ -91,6 +91,10 @@ We also recommend using one of the latest versions of WordPress, Advanced Custom
 5. Enjoy your improved CMS experience!
 
 == Changelog ==
+
+= 1.0.2 =
+* Fix PHP warning
+* Fix missing widget customizations
 
 = 1.0.1 =
 * Fix for Page Builder 2.5
