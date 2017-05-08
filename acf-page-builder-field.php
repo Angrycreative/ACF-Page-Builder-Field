@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://wordpress.org/plugins/acf-page-builder-field/
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 1.0.2
+Version: 1.0.3
 Author: Peter Elmered, Johan Möller, Viktor Fröberg, Olaf Lindström, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
@@ -343,7 +343,13 @@ class ACF_Page_Builder {
             $style_attributes = array();
             if( !empty( $panels_data['grids'][$gi]['style']['class'] ) ) {
                 $style_attributes['class'] = 'panel-row-style ' . $panels_data['grids'][$gi]['style']['class'];
-            }
+            } else {
+				$style_attributes['class'] = 'panel-row-style';
+			}
+
+			if( !empty( $panels_data['grids'][$gi]['style']['id'] ) ) {
+				$style_attributes['id'] = $panels_data['grids'][$gi]['style']['id'];
+			}
 
             $grid_classes = apply_filters( 'siteorigin_panels_row_classes', array('panel-grid'), $panels_data['grids'][$gi] );
 
