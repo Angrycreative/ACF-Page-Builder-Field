@@ -92,8 +92,10 @@ We also recommend using one of the latest versions of WordPress, Advanced Custom
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.0.3 =
 * Fix for custom ID
+* Fix for custom cell classes.
+* Fix for full width rows
 * Fix for row customizations without custom row class...
 
 = 1.0.2 =
