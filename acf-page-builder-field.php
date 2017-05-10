@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields: Page Builder Field
 Plugin URI: https://wordpress.org/plugins/acf-page-builder-field/
 Description: This plugin will add a page builder field in Advanced custom fields
-Version: 1.0.2
+Version: 1.0.3
 Author: Peter Elmered, Johan Möller, Viktor Fröberg, Olaf Lindström, Angry Creative
 Author URI: https://angrycreative.se/
 License: GPLv2 or later
@@ -340,15 +340,17 @@ class ACF_Page_Builder {
 
         foreach ( $grids as $gi => $cells ) {
 
-            $style_attributes = array();
             if( !empty( $panels_data['grids'][$gi]['style']['class'] ) ) {
-                $style_attributes['class'] = 'panel-row-style ' . $panels_data['grids'][$gi]['style']['class'];
-            }
+                $panels_data['grids'][$gi]['style']['class'] .= ' panel-row-style';
+            } else {
+				$panels_data['grids'][$gi]['style']['class']  = 'panel-row-style';
+			}
 
             $grid_classes = apply_filters( 'siteorigin_panels_row_classes', array('panel-grid'), $panels_data['grids'][$gi] );
 
             // Themes can add their own attributes to the style wrapper
-            $row_style_wrapper = $this->start_style_wrapper( 'row', $style_attributes, $post_id . '-' . $gi );
+            $row_style_wrapper = $this->start_style_wrapper( 'row', $panels_data['grids'][$gi]['style'], $post_id . '-' . $gi );
+
             $grid_classes[] = ! empty( $row_style_wrapper ) ? 'panel-has-style' : 'panel-no-style';
 
 
@@ -372,8 +374,22 @@ class ACF_Page_Builder {
             if( !empty($row_style_wrapper) ) echo $row_style_wrapper;
 
             foreach ( $cells as $ci => $widgets ) {
+
+				$cell_classes = array( 'panel-grid-cell' );
+
+				if ( empty( $widgets ) ) {
+					$cell_classes[] = 'panel-grid-cell-empty';
+				}
+				if ( $ci == count( $cells ) - 2 && count( $cells[ $ci + 1 ] ) == 0 ) {
+					$cell_classes[] = 'panel-grid-cell-mobile-last';
+				}
+
+				if(isset($panels_data['grids'][$gi]['style']['cell_class'])) {
+					$cell_classes[] = $panels_data['grids'][$gi]['style']['cell_class'];
+				}
                 // Themes can add their own styles to cells
-                $cell_classes = apply_filters( 'siteorigin_panels_row_cell_classes', array('panel-grid-cell'), $panels_data );
+				$cell_classes = apply_filters( 'siteorigin_panels_cell_classes', $cell_classes, $panels_data, $widget );
+
                 $cell_attributes = apply_filters( 'siteorigin_panels_row_cell_attributes', array(
                     'class' => implode( ' ', $cell_classes ),
                     'id' => 'pgc-' . $post_id . '-' . $gi  . '-' . $ci
